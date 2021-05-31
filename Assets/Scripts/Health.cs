@@ -2,9 +2,17 @@
 
 public class Health : MonoBehaviour
 {
-    public static void RemoveHeart(int health)
+
+    public GameObject player;
+    private GameObject child;
+
+    public void RemoveHeart(int health)
     {
-        Debug.Log(GameObject.Find("Health/heart" + health));
-        GameObject.Find("Health/heart" + health).SetActive(false);
+        child = player.transform.Find("Health/heart" + health).gameObject;
+
+        if (child)
+        {
+            child.SetActive(false);
+        }      
     }
 }

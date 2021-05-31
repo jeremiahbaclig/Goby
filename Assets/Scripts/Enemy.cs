@@ -36,11 +36,11 @@ public class Enemy : MonoBehaviour
         {
             anim.SetFloat("Health", 0f);
             rend = gameObject.GetComponent<SpriteRenderer>();
-            rend.sortingOrder -= 1;
+            rend.sortingOrder -= 1; // slowly hide the character
 
             if(rend.sortingOrder < 0)
             {
-                Destroy(gameObject);
+                Destroy(gameObject); // remove once bts
             }
         }
     }
@@ -52,10 +52,13 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        dazedTime = startDazedTime;
-        Instantiate(blood, transform.position, Quaternion.identity);
-        Debug.Log("HEALTH: " + health);
-        Health.RemoveHeart(health);
+        dazedTime = startDazedTime; // enemies stunned
+        var instant = Instantiate(blood, transform.position, Quaternion.identity); // instantiate particle
+        instant.transform.parent = gameObject.transform; // set particle's parent
+
+        gameObject.transform.Find("Health/heart" + health).SetPositionAndRotation // get heart and remove it
+            (new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 100), Quaternion.identity);
+        
         health -= damage;
     }
 
@@ -64,24 +67,40 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             RandomMovement();
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
         }
     }
     private void RandomMovement()
     {
-        float choice = UnityEngine.Random.value;
-
-        movement = new Vector2(choice, Math.Abs(1f - choice));
-
-        anim.SetFloat("Horizontal", (float)Math.Round(choice));
-        anim.SetFloat("Speed", (float)Math.Round(choice));
-
-        if((float)Math.Round(choice) < 0.1f)
+        float choice = UnityEngine.Random.Range(-1, 1);
+        int[] valid = {-1, 1};
+        int factorX = UnityEngine.Random.Range(0, 1);
+        int factorY = UnityEngine.Random.Range(0, 1);
+        if (health >= 3)
         {
-            moveSpeed = 0;
+            movement = new Vector2(choice * valid[factorX], choice * valid[factorY]); // where to move to
+
+            anim.SetFloat("Horizontal", (float)Math.Round(choice));
+            anim.SetFloat("Speed", (float)Math.Round(choice));
+
+            if ((float)Math.Round(choice) < 0.1f) // if random val is < 0.5, then idle
+            {
+                moveSpeed = 0f;
+            }
+            else
+            {
+                moveSpeed = 2f;
+            }
         }
         else
         {
+            int moveX = UnityEngine.Random.Range(0, 1);
+            int moveY = UnityEngine.Random.Range(0, 1);
+            movement = new Vector2(valid[moveX], valid[moveY]); // where to move to
+
+            anim.SetFloat("Horizontal", (float)Math.Round(Math.Abs(choice)));
+            anim.SetFloat("Speed", 1);
+
             moveSpeed = 3f;
         }
     }
