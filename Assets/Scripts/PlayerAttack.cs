@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -10,10 +8,11 @@ public class PlayerAttack : MonoBehaviour
 
     public float attackRange;
     public int damage;
+    private bool canAttack = false;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canAttack)
         {
             player.CreateAttack();
             CameraShake.Instance.ShakeCamera(4f, 0.15f);
