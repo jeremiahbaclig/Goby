@@ -1,14 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public GameObject target;
+    public Animator camAnim;
+    public static bool starting = false;
 
-    void Update()
+    private void Update()
     {
-        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -10);
+        if (starting)
+        {
+            CameraShake.Instance.ShakeCamera(4f, 0.15f);
+            Invoke(nameof(OpeningCutscene), 0.02f);
+        }
+    }
+    private void OpeningCutscene()
+    {
+        camAnim.SetBool("OpeningCutscene", true);
+        Invoke(nameof(StopCutscene), 0.2f);
+    }
 
+    private void StopCutscene()
+    {
+        camAnim.SetBool("OpeningCutscene", false);
+        starting = false;
+        gameObject.SetActive(false);
     }
 }

@@ -8,11 +8,11 @@ public class PlayerAttack : MonoBehaviour
 
     public float attackRange;
     public int damage;
-    private bool canAttack = false;
+    public bool canAttack = true;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        if (Input.GetMouseButtonDown(0) && canAttack && !PauseMenu.isPaused)
         {
             player.CreateAttack();
             CameraShake.Instance.ShakeCamera(4f, 0.15f);

@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
         int[] valid = {-1, 1};
         int factorX = UnityEngine.Random.Range(0, 1);
         int factorY = UnityEngine.Random.Range(0, 1);
-        if (health >= 3)
+        if (health >= 3 && !PauseMenu.isPaused)
         {
             movement = new Vector2(choice * valid[factorX], choice * valid[factorY]); // where to move to
 
@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
                 moveSpeed = 2f;
             }
         }
-        else
+        else if (!PauseMenu.isPaused)
         {
             int moveX = UnityEngine.Random.Range(0, 1);
             int moveY = UnityEngine.Random.Range(0, 1);

@@ -4,9 +4,11 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+
     public void PlayGame()
     {
         SceneManager.LoadScene("GameScene");
+        PlayerCamera.starting = true;
     }
 
     public void LoadMainMenu()
@@ -17,11 +19,6 @@ public class MainMenu : MonoBehaviour
     public void Settings()
     {
         SceneManager.LoadScene("Settings");
-    }
-
-    public void PauseGame()
-    {
-        SceneManager.LoadScene("PauseMenu");
     }
 
     public void QuitGame()
@@ -43,6 +40,7 @@ public class MainMenu : MonoBehaviour
             GameObject openingTrigger = GameObject.Find("Toggle");
             openingTrigger.GetComponent<Toggle>().isOn = true;
             DialogueManager.conversation++;
+            PlayerCamera.starting = true;
         }
     }
 

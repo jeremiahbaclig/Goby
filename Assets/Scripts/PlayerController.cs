@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Vertical", movement.y);
         anim.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (PlayerCamera.starting || PauseMenu.isPaused)
+        {
+            moveSpeed = 0f;
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed = 5f;
         }
