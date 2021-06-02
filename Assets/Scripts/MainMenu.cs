@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1f;
         GameObject openingTrigger = GameObject.Find("Toggle");
         openingTrigger.GetComponent<Toggle>().isOn = false;
     }
@@ -39,14 +40,14 @@ public class MainMenu : MonoBehaviour
         {
             GameObject openingTrigger = GameObject.Find("Toggle");
             openingTrigger.GetComponent<Toggle>().isOn = true;
-            Invoke(nameof(CallOpening), 0.02f);
-            // PlayerCamera.starting = true;
+            Invoke(nameof(CallOpening), 0.2f);
         }
     }
 
     private void CallOpening()
     {
-        PlayerCamera cam = new PlayerCamera();
+        Debug.Log("DOING THE CUTSCENE");
+        PlayerCamera cam = GetComponent<PlayerCamera>();
         cam.OpeningCutscene();
     }
 

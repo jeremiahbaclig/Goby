@@ -3,11 +3,15 @@
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject pauseButton;
+    public GameObject mobileButtons;
     public static bool isPaused;
     void Start()
     {
         pauseMenu.SetActive(false);
         isPaused = false;
+        pauseButton = GameObject.Find("PauseButton");
+        mobileButtons = GameObject.Find("MobileButtons");
     }
 
     void Update()
@@ -30,6 +34,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        pauseButton.SetActive(false);
+        mobileButtons.SetActive(false);
     }
 
     public void ResumeGame()
@@ -37,5 +43,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        pauseButton.SetActive(true);
+        mobileButtons.SetActive(true);
     }
 }

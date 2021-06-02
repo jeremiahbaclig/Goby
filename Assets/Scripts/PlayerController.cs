@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 4f;
+    public static bool isSprinting = false;
+
     public Rigidbody2D rb;
     public Animator anim;
     public ParticleSystem dust;
@@ -15,18 +16,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP_8_1
+        {
+            movement.x = CrossPlatformInputManager.GetAxis("Horizontal");
+            movement.y = CrossPlatformInputManager.GetAxis("Vertical");
+        }
+#else
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
+#endif
         anim.SetFloat("Horizontal", movement.x);
         anim.SetFloat("Vertical", movement.y);
         anim.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (PlayerCamera.starting || PauseMenu.isPaused)
+        if (PauseMenu.isPaused)
         {
             moveSpeed = 0f;
         }
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.LeftShift) || isSprinting)
         {
             moveSpeed = 5f;
         }

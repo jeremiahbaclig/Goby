@@ -2,21 +2,12 @@
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField]
     public Animator camAnim;
-    public static bool starting = false;
 
-    private void Update()
-    {
-        if (starting)
-        {
-            Debug.Log("Starting cutscene");
-            CameraShake.Instance.ShakeCamera(4f, 0.15f);
-            Invoke(nameof(OpeningCutscene), 0.02f);
-        }
-    }
     public void OpeningCutscene()
     {
-        gameObject.SetActive(true);
+        GameObject.Find("CM StateDrivenCamera1").SetActive(true);
         camAnim.SetBool("OpeningCutscene", true);
         StopCutscene();
     }
@@ -24,7 +15,6 @@ public class PlayerCamera : MonoBehaviour
     private void StopCutscene()
     {
         camAnim.SetBool("OpeningCutscene", false);
-        starting = false;
-        gameObject.SetActive(false);
+        GameObject.Find("CM StateDrivenCamera1").SetActive(false);
     }
 }
