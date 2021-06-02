@@ -6,12 +6,17 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 4f;
     public static bool isSprinting = false;
+    public static bool onMobile = false;
 
     public Rigidbody2D rb;
     public Animator anim;
     public ParticleSystem dust;
     public ParticleSystem attack;
     public Tilemap environment;
+
+    public AudioSource walkingSound;
+    public AudioSource runningSound;
+    
     Vector2 movement;
 
     void Update()
@@ -21,6 +26,7 @@ public class PlayerController : MonoBehaviour
         {
             movement.x = CrossPlatformInputManager.GetAxis("Horizontal");
             movement.y = CrossPlatformInputManager.GetAxis("Vertical");
+            onMobile = true;
         }
 #else
         movement.x = Input.GetAxisRaw("Horizontal");

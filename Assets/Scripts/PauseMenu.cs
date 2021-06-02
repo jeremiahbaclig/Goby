@@ -35,7 +35,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         pauseButton.SetActive(false);
-        mobileButtons.SetActive(false);
+        if(PlayerController.onMobile)
+            mobileButtons.SetActive(false);
     }
 
     public void ResumeGame()
@@ -44,6 +45,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         pauseButton.SetActive(true);
-        mobileButtons.SetActive(true);
+        if(PlayerController.onMobile)
+            mobileButtons.SetActive(true);
     }
 }
