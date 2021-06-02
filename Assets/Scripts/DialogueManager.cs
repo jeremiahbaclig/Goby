@@ -10,7 +10,6 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
 
     private Queue<string> sentences;
-    public static int conversation = 0;
 
     public Animator anim;
 
@@ -65,13 +64,14 @@ public class DialogueManager : MonoBehaviour
         foreach(char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.02f);
+            yield return null; // new WaitForSeconds(0.02f); --> issues on consecutive playthrough
         }
     }
 
     void EndDialogue()
     {
         Debug.Log("End of conversation.");
+        StopAllCoroutines();
         anim.SetBool("IsOpen", false);
     }
 }

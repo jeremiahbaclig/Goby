@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
     public void PlayGame()
     {
         SceneManager.LoadScene("GameScene");
-        PlayerCamera.starting = true;
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        GameObject openingTrigger = GameObject.Find("Toggle");
+        openingTrigger.GetComponent<Toggle>().isOn = false;
     }
 
     public void Settings()
@@ -35,13 +35,19 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("OnSceneLoaded: " + scene.name + " MODE: " + mode);
 
-        if(scene.name == "GameScene" && DialogueManager.conversation == 0)
+        if(scene.name == "GameScene")
         {
             GameObject openingTrigger = GameObject.Find("Toggle");
             openingTrigger.GetComponent<Toggle>().isOn = true;
-            DialogueManager.conversation++;
-            PlayerCamera.starting = true;
+            Invoke(nameof(CallOpening), 0.02f);
+            // PlayerCamera.starting = true;
         }
+    }
+
+    private void CallOpening()
+    {
+        PlayerCamera cam = new PlayerCamera();
+        cam.OpeningCutscene();
     }
 
     void OnDisable()

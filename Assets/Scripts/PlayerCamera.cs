@@ -9,14 +9,16 @@ public class PlayerCamera : MonoBehaviour
     {
         if (starting)
         {
+            Debug.Log("Starting cutscene");
             CameraShake.Instance.ShakeCamera(4f, 0.15f);
             Invoke(nameof(OpeningCutscene), 0.02f);
         }
     }
-    private void OpeningCutscene()
+    public void OpeningCutscene()
     {
+        gameObject.SetActive(true);
         camAnim.SetBool("OpeningCutscene", true);
-        Invoke(nameof(StopCutscene), 0.2f);
+        StopCutscene();
     }
 
     private void StopCutscene()
