@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Vertical", movement.y);
         anim.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (PauseMenu.isPaused)
+        if (PauseMenu.isPaused || CutsceneManager.isCutscene)
         {
             moveSpeed = 0f;
         }

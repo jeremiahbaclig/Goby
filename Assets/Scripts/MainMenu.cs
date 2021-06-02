@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    public PlayerCamera cam;
+
     public void PlayGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -13,8 +15,6 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
-        GameObject openingTrigger = GameObject.Find("Toggle");
-        openingTrigger.GetComponent<Toggle>().isOn = false;
     }
 
     public void Settings()
@@ -40,15 +40,9 @@ public class MainMenu : MonoBehaviour
         {
             GameObject openingTrigger = GameObject.Find("Toggle");
             openingTrigger.GetComponent<Toggle>().isOn = true;
-            Invoke(nameof(CallOpening), 0.2f);
+            CutsceneManager.isCutscene = true;
+            cam.CallOpening();
         }
-    }
-
-    private void CallOpening()
-    {
-        Debug.Log("DOING THE CUTSCENE");
-        PlayerCamera cam = GetComponent<PlayerCamera>();
-        cam.OpeningCutscene();
     }
 
     void OnDisable()
