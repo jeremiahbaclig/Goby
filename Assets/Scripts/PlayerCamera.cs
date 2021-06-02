@@ -21,9 +21,9 @@ public class PlayerCamera : MonoBehaviour
     public void OpeningCutscene()
     {
         camAnim.SetBool("OpeningCutscene", true);
-        CutsceneManager.cutscene = 2;
         CutsceneManager.isCutscene = true;
         StartCoroutine(CallStopCutscene("OpeningCutscene", 0.5f));
+        CutsceneManager.cutscene = 2;
     }
 
     IEnumerator CallStopCutscene(string name, float timeToWait)
@@ -35,9 +35,14 @@ public class PlayerCamera : MonoBehaviour
     public void CutsceneTwo()
     {
         camAnim.SetBool("CutsceneTwo", true);
-        CutsceneManager.cutscene = 3;
         CutsceneManager.isCutscene = true;
         StartCoroutine(CallStopCutscene("CutsceneTwo", 2f));
+        CutsceneManager.cutscene = 3;
+    }
+
+    public void CutsceneThree()
+    {
+        CutsceneManager.cutscene = 4;
     }
 
     private void StopCutscene(string cutsceneName)

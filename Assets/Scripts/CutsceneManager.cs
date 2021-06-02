@@ -10,8 +10,16 @@ public class CutsceneManager : MonoBehaviour
     {
         if(collision.tag == "Player" && cutscene == 2)
         {
+            GameObject.Find("DialogueTrigger" + cutscene).SetActive(false);
             GameObject.Find("TriggerTwo").GetComponent<DialogueTrigger>().TriggerDialogue();
             cam.CutsceneTwo();
+        }
+        else if (collision.tag == "Player" && cutscene == 3)
+        {
+            GameObject.Find("DialogueTrigger" + cutscene).SetActive(false);
+            GameObject.Find("TriggerThree").GetComponent<DialogueTrigger>().TriggerDialogue();
+            cam.CutsceneThree();
+            GameObject.Find("PlayerEarlyBoundary").SetActive(false);
         }
     }
 }
