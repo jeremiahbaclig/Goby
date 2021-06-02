@@ -21,12 +21,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP_8_1
         {
             movement.x = CrossPlatformInputManager.GetAxis("Horizontal");
             movement.y = CrossPlatformInputManager.GetAxis("Vertical");
-            onMobile = true;
         }
 #else
         movement.x = Input.GetAxisRaw("Horizontal");
