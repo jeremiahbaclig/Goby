@@ -4,7 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 4f;
+    public static float moveSpeed = 2.2f;
     public static bool isSprinting = false;
     public static bool onMobile = false;
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Vertical", movement.y);
         anim.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (PauseMenu.isPaused)
+        if (PauseMenu.isPaused || CutsceneManager.isCutscene || DialogueManager.isTalking)
         {
             moveSpeed = 0f;
         }

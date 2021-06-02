@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack && !PauseMenu.isPaused)
+        if (Input.GetMouseButtonDown(0) && canAttack && !PauseMenu.isPaused && !DialogueManager.isTalking)
         {
             player.CreateAttack();
             CameraShake.Instance.ShakeCamera(4f, 0.15f);
