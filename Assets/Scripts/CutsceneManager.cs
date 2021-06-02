@@ -10,7 +10,7 @@ public class CutsceneManager : MonoBehaviour
     {
         if(collision.tag == "Player" && cutscene == 2)
         {
-            Debug.Log("Calling cut 2");
+            GameObject.Find("TriggerTwo").GetComponent<DialogueTrigger>().TriggerDialogue();
             cam.CutsceneTwo();
         }
     }

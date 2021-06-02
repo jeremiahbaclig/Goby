@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
     {
         GameObject openingTrigger = GameObject.Find("Toggle");
         
-        if (openingTrigger.GetComponent<Toggle>().isOn)
+        if (openingTrigger.GetComponent<Toggle>().isOn && CutsceneManager.cutscene == 1)
         {
             GameObject.Find("Trigger").GetComponent<DialogueTrigger>().TriggerDialogue();
             openingTrigger.GetComponent<Toggle>().isOn = false;
