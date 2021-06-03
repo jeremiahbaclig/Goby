@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
+        CutsceneManager.cutscene = 1;
     }
 
     public void Settings()
