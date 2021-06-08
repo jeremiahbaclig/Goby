@@ -12,6 +12,7 @@ public class Gold : MonoBehaviour
     private void Start()
     {
         goldCount = int.Parse(text.GetComponent<TMP_Text>().text);
+
     }
 
     public static void ResetGoldCount()

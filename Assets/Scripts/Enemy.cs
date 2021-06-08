@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
     }
-    private void RandomMovement()
+    private void RandomMovement() // need to find the top 3(?) closest waypoints and go to it
     {
         float choice = UnityEngine.Random.Range(-1, 1);
         int[] valid = {-1, 1};
