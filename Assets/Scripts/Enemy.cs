@@ -15,10 +15,21 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public GameObject blood;
     private SpriteRenderer rend;
+    private Waypoints waypoint;
+    private int waypointIndex;
 
     void Start()
     {
-        StartCoroutine(InvokeMovement());
+        // StartCoroutine(InvokeMovement());
+        waypoint = GameObject.FindGameObjectWithTag("Waypoints").GetComponent<Waypoints>();
+
+        for(int i=0; waypointIndex < waypoint.waypoints.Length - 1; i++)
+        {
+            if(Vector2.Distance(rb.position, waypoint.waypoints[waypointIndex].position) < 1f)
+            {
+                waypointIndex = i;
+            }
+        }
     }
 
     void Update()
@@ -43,11 +54,42 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject); // remove once bts
             }
         }
+
+        if(Vector2.Distance(rb.position, waypoint.waypoints[waypointIndex].position) < 1f)
+        {
+            if(waypointIndex < waypoint.waypoints.Length - 1)
+            {
+                int half = UnityEngine.Random.Range(0, 1);
+                int moving = UnityEngine.Random.Range(0, 1);
+
+                if (half == 0)
+                {
+                    // stay at position
+                }
+                else
+                {
+                    if (moving == 1)
+                    {
+                        waypointIndex++;
+                    }
+                    else if (waypointIndex != 0)
+                    {
+                        waypointIndex--;
+                    }
+                    else
+                    {
+                        waypointIndex++;
+                    }
+                    
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+        movement = waypoint.waypoints[waypointIndex].position;
+        rb.position = Vector2.MoveTowards(rb.position, movement, moveSpeed * Time.deltaTime);
     }
 
     public void TakeDamage(int damage)
@@ -60,48 +102,5 @@ public class Enemy : MonoBehaviour
             (new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 100), Quaternion.identity);
         
         health -= damage;
-    }
-
-    IEnumerator InvokeMovement()
-    {
-        while (true)
-        {
-            RandomMovement();
-            yield return new WaitForSeconds(2);
-        }
-    }
-    private void RandomMovement() // need to find the top 3(?) closest waypoints and go to it
-    {
-        float choice = UnityEngine.Random.Range(-1, 1);
-        int[] valid = {-1, 1};
-        int factorX = UnityEngine.Random.Range(0, 1);
-        int factorY = UnityEngine.Random.Range(0, 1);
-        if (health >= 3 && !PauseMenu.isPaused && !CutsceneManager.isCutscene)
-        {
-            movement = new Vector2(choice * valid[factorX], choice * valid[factorY]); // where to move to
-
-            anim.SetFloat("Horizontal", (float)Math.Round(choice));
-            anim.SetFloat("Speed", (float)Math.Round(choice));
-
-            if ((float)Math.Round(choice) < 0.1f) // if random val is < 0.5, then idle
-            {
-                moveSpeed = 0f;
-            }
-            else
-            {
-                moveSpeed = 2f;
-            }
-        }
-        else if (!PauseMenu.isPaused && !CutsceneManager.isCutscene)
-        {
-            int moveX = UnityEngine.Random.Range(0, 1);
-            int moveY = UnityEngine.Random.Range(0, 1);
-            movement = new Vector2(valid[moveX], valid[moveY]); // where to move to
-
-            anim.SetFloat("Horizontal", (float)Math.Round(Math.Abs(choice)));
-            anim.SetFloat("Speed", 1);
-
-            moveSpeed = 3f;
-        }
     }
 }
