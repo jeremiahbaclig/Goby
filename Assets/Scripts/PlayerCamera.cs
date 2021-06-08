@@ -42,6 +42,9 @@ public class PlayerCamera : MonoBehaviour
 
     public void CutsceneThree()
     {
+        camAnim.SetBool("CutsceneThree", true);
+        CutsceneManager.isCutscene = true;
+        StartCoroutine(CallStopCutscene("CutsceneThree", 2f));
         CutsceneManager.cutscene = 4;
     }
 
