@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        // StartCoroutine(InvokeMovement());
         waypoint = GameObject.FindGameObjectWithTag("Waypoints").GetComponent<Waypoints>();
 
         for(int i=0; waypointIndex < waypoint.waypoints.Length - 1; i++)
@@ -28,6 +27,7 @@ public class Enemy : MonoBehaviour
             if(Vector2.Distance(rb.position, waypoint.waypoints[waypointIndex].position) < 1f)
             {
                 waypointIndex = i;
+                break;
             }
         }
     }
@@ -59,8 +59,8 @@ public class Enemy : MonoBehaviour
         {
             if(waypointIndex < waypoint.waypoints.Length - 1)
             {
-                int half = UnityEngine.Random.Range(0, 1);
-                int moving = UnityEngine.Random.Range(0, 1);
+                int half = UnityEngine.Random.Range(0, 2);
+                int moving = UnityEngine.Random.Range(0, 2);
 
                 if (half == 0)
                 {
