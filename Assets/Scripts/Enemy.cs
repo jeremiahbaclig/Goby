@@ -22,11 +22,14 @@ public class Enemy : MonoBehaviour
     {
         waypoint = GameObject.FindGameObjectWithTag("Waypoints").GetComponent<Waypoints>();
 
-        for(int i=0; waypointIndex < waypoint.waypoints.Length - 1; i++)
+        
+        for(int i=0; i < waypoint.waypoints.Length - 1; i++)
         {
-            if(Vector2.Distance(rb.position, waypoint.waypoints[waypointIndex].position) < 1f)
+            Vector2 current = waypoint.waypoints[i].position;
+            if (Vector2.Distance(rb.position, current) < 1f)
             {
                 waypointIndex = i;
+                Debug.Log("Ghost [" + gameObject.name + "] index at " + waypointIndex);
                 break;
             }
         }
